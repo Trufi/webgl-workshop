@@ -6,5 +6,8 @@
     "scripts": {
         "start": "npm run dev",
         "dev": "parcel index.html"
+    },
+    "dependencies": {
+        "@2gis/gl-matrix": "^2.4.5"
     }
 }

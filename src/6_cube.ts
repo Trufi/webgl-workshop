@@ -204,6 +204,6 @@ gl.clear(gl.COLOR_BUFFER_BIT);
 
 // Рисуем треугольник
 // Третьим аргументом передаём количество вершин геометрии
-gl.drawArrays(gl.TRIANGLES, 0, 27);
+gl.drawArrays(gl.TRIANGLES, 0, 36);
 
 export {};

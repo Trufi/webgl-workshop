@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        "types": ["@2gis/gl-matrix"],
+        "lib": ["dom", "es6"]
+    }
+}
