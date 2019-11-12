@@ -1,1 +1,1 @@
-import './11_cubeMulti';
+import './10_cubeMulti';

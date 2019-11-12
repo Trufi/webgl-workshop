@@ -1,0 +1,158 @@
+{
+    "htmlstyle": {
+        "scope": "html",
+        "prefix": "wstyle",
+        "body": ["<style>html,body,#canvas {margin: 0; width: 100%; height: 100%;}</style>"]
+    },
+    "getcanvas": {
+        "scope": "typescript,javascript",
+        "prefix": "wcanvas",
+        "body": ["const canvas = document.getElementById('canvas') as HTMLCanvasElement;\n"]
+    },
+    "size": {
+        "scope": "typescript,javascript",
+        "prefix": "wsize",
+        "body": ["const width = window.innerWidth;\nconst height = window.innerHeight;\n"]
+    },
+    "canvassize": {
+        "scope": "typescript,javascript",
+        "prefix": "wcanvassize",
+        "body": ["canvas.width = width;\ncanvas.height = height;\n"]
+    },
+    "shadercreate": {
+        "scope": "typescript,javascript",
+        "prefix": "wcreateshader",
+        "body": [
+            "// Создаем шейдеры\nconst vertexShader = gl.createShader(gl.VERTEX_SHADER);\nconst fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);"
+        ]
+    },
+    "vertcode": {
+        "scope": "typescript,javascript",
+        "prefix": "wvertcode",
+        "body": [
+            "const vertexCode = `\n    attribute vec2 a_position;\n    void main(void) {\n        gl_Position = vec4(a_position, 0.0, 1.0);\n    }\n`;"
+        ]
+    },
+    "fragcode": {
+        "scope": "typescript,javascript",
+        "prefix": "wfragcode",
+        "body": [
+            "const fragmentCode = `\n    precision mediump float;\n\n    void main(void) {\n        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);\n    }\n`;"
+        ]
+    },
+    "shadersource": {
+        "scope": "typescript,javascript",
+        "prefix": "wshadersource",
+        "body": [
+            "gl.shaderSource(vertexShader, vertexCode);\ngl.shaderSource(fragmentShader, fragmentCode);"
+        ]
+    },
+    "shadercompile": {
+        "scope": "typescript,javascript",
+        "prefix": "wshadercompile",
+        "body": ["gl.compileShader(vertexShader);\ngl.compileShader(fragmentShader);"]
+    },
+    "shadercheck": {
+        "scope": "typescript,javascript",
+        "prefix": "wshadercheck",
+        "body": [
+            "// Проверяем на ошибки\nif (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {\n    console.log(gl.getShaderInfoLog(vertexShader));\n}\nif (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {\n    console.log(gl.getShaderInfoLog(fragmentShader));\n}\n"
+        ]
+    },
+    "program": {
+        "scope": "typescript,javascript",
+        "prefix": "wprogram",
+        "body": [
+            "const program = gl.createProgram();\ngl.attachShader(program, vertexShader);\ngl.attachShader(program, fragmentShader);\ngl.linkProgram(program);\nif (!gl.getProgramParameter(program, gl.LINK_STATUS)) {\n    console.log('Could not initialize shaders');\n}\n"
+        ]
+    },
+    "locations": {
+        "scope": "typescript,javascript",
+        "prefix": "wlocations",
+        "body": [
+            "// Получим местоположение переменных в программе шейдеров\nconst locations = {\n    aPosition: gl.getAttribLocation(program, 'a_position'),\n};\n"
+        ]
+    },
+    "buffer": {
+        "scope": "typescript,javascript",
+        "prefix": "wbuffervertex",
+        "body": [
+            "// Создаем данные\nconst vertexBuffer = gl.createBuffer();\n// prettier-ignore\nconst vertices = [\n    -1,  1,\n     1,  1,\n     0, -1,\n];\ngl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);\ngl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);\n"
+        ]
+    },
+    "buffervertexstart": {
+        "scope": "typescript,javascript",
+        "prefix": "wbuffervertexstart",
+        "body": [
+            "const vertexBuffer = gl.createBuffer();\n// prettier-ignore\nconst vertices = [];\ngl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);\ngl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);\n"
+        ]
+    },
+    "useprogram": {
+        "scope": "typescript,javascript",
+        "prefix": "wuseprogram",
+        "body": [
+            "// Укажем какую шейдерную программу мы намерены далее использовать\ngl.useProgram(program);\n"
+        ]
+    },
+    "bindvertex": {
+        "scope": "typescript,javascript",
+        "prefix": "wbindvertex",
+        "body": [
+            "// Связываем данные вершин\ngl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);\ngl.enableVertexAttribArray(locations.aPosition);\ngl.vertexAttribPointer(locations.aPosition, 2, gl.FLOAT, false, 0, 0);\n"
+        ]
+    },
+    "clear": {
+        "scope": "typescript,javascript",
+        "prefix": "wclear",
+        "body": [
+            "// Очищаем сцену, закрашивая её в белый цвет\ngl.clearColor(1.0, 1.0, 1.0, 1.0);\ngl.clear(gl.COLOR_BUFFER_BIT);\n"
+        ]
+    },
+    "rendertriangle": {
+        "scope": "typescript,javascript",
+        "prefix": "wrendertriangle",
+        "body": [
+            "// Рисуем треугольник\n// Третьим аргументом передаём количество вершин геометрии\ngl.drawArrays(gl.TRIANGLES, 0, 3);\n"
+        ]
+    },
+    "binduniform": {
+        "scope": "typescript,javascript",
+        "prefix": "wbinduniform",
+        "body": ["// Связываем данные цветов\ngl.uniform3f(locations.uColor, 0.46, 0.11, 0.18);\n"]
+    },
+    "buffercolor": {
+        "scope": "typescript,javascript",
+        "prefix": "wbuffercolor",
+        "body": [
+            "const colorBuffer = gl.createBuffer();\n// prettier-ignore\nconst colors = [\n    1, 0, 0,\n    0, 1, 0,\n    0, 0, 1,\n];\ngl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);\ngl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);\n"
+        ]
+    },
+    "cubevertices": {
+        "scope": "typescript,javascript",
+        "prefix": "wcubevertices",
+        "body": [
+            "const vertices = [\n    // Передняя грань\n    -1, -1, -1,\n    1, -1, -1,\n    -1, -1, 1,\n    1, -1, 1,\n    -1, -1, 1,\n    1, -1, -1,\n    // Задняя грань\n    -1, 1, -1,\n    -1, 1, 1,\n    1, 1, -1,\n    1, 1, 1,\n    1, 1, -1,\n    -1, 1, 1,\n    // Нижняя грань\n    -1, -1, -1,\n    -1, 1, -1,\n    1, -1, -1,\n    1, 1, -1,\n    1, -1, -1,\n    -1, 1, -1,\n    // Верхняя грань\n    -1, -1, 1,\n    1, -1, 1,\n    -1, 1, 1,\n    1, 1, 1,\n    -1, 1, 1,\n    1, -1, 1,\n    // Левая грань\n    -1, -1, -1,\n    -1, -1, 1,\n    -1, 1, -1,\n    -1, 1, 1,\n    -1, 1, -1,\n    -1, -1, 1,\n    // Правая грань\n    1, -1, -1,\n    1, 1, -1,\n    1, -1, 1,\n    1, 1, 1,\n    1, -1, 1,\n    1, 1, -1\n];"
+        ]
+    },
+    "cubecolors": {
+        "scope": "typescript,javascript",
+        "prefix": "wcubecolors",
+        "body": [
+            "const colors = [\n    // Передняя грань\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    // Задняя грань\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    1, 0.5, 0.5,\n    // Нижняя грань\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    // Верхняя грань\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    0.5, 0.7, 1,\n    // Левая грань\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    // right face\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3,\n    0.3, 1, 0.3\n];\n"
+        ]
+    },
+    "importmatrix": {
+        "scope": "typescript,javascript",
+        "prefix": "wimportmatrix",
+        "body": [
+            "import * as vec3 from '@2gis/gl-matrix/vec3';\nimport * as mat4 from '@2gis/gl-matrix/mat4';\n"
+        ]
+    },
+    "rotatevector": {
+        "scope": "typescript,javascript",
+        "prefix": "wrotatevector",
+        "body": [
+            "for (let i = 0; i < vertices.length; i += 3) {\n    const vector = [vertices[i], vertices[i + 1], vertices[i + 2]];\n    vec3.transformMat4(vector, vector, objectMatrix);\n    vertices[i] = vector[0];\n    vertices[i + 1] = vector[1];\n    vertices[i + 2] = vector[2];\n}\n"
+        ]
+    }
+}

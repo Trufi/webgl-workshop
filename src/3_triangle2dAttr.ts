@@ -65,7 +65,6 @@ const locations = {
 
 // Создаем данные
 const vertexBuffer = gl.createBuffer();
-const colorBuffer = gl.createBuffer();
 
 // prettier-ignore
 const vertices = [
@@ -73,6 +72,7 @@ const vertices = [
      1,  1,
      0, -1,
 ];
+const colorBuffer = gl.createBuffer();
 // prettier-ignore
 const colors = [
     1, 0, 0,
